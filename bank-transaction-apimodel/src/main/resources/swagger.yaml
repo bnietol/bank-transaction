@@ -1,0 +1,168 @@
+swagger: '2.0'
+info:
+  version: "1.0.0"
+  title: 'Bank Transaction API'
+  description:  |
+    # Bank transaction API Services
+
+    ## General Error codes:
+    This general errors can be returned by any operation response, in error field *code*
+
+    code | description
+    --- | --
+     KOGEN01 | Request param must not be null
+     KOGEN02 | Invalid value for a request param
+     KOGEN03 | Business resource not found
+     KOGEN04 | Internal service error
+     KOGEN05 | Gateway timeout on external service invocation
+
+tags:
+  - name: transaction-bank
+    description: transaction bank related services
+
+definitions:
+
+  Error:
+    type: object
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: string
+        description: error code
+      message:
+        type: string
+        description: error message
+      description:
+        type: string
+        description: additional error description
+
+  SortDirection: &SORT
+    type: string
+    enum:
+      - ASC
+      - DES
+
+  TransactionDto:
+    type: object
+    description: transaction object
+    properties:
+      reference:
+        type: string
+      accountIban:
+        type: string
+      date:
+        type: string
+      amount:
+        type: number
+      fee:
+        type: number
+      description:
+        type: string
+      status:
+        type: string
+        enum:
+          - PENDING
+          - SETTLED
+          - FUTURE
+          - INVALID
+  TransactionFilterDto:
+    type: object
+    description: transaction object
+    properties:
+      reference:
+        type: string
+      channel:
+        type: string
+        enum:
+          - CLIENT
+          - ATM
+          - INTERNAL
+
+paths:
+  '/transaction':
+    get:
+      tags:
+        - transaction-bank
+      summary: get all transaction bank
+      description: get all transaction bank, could be filtered
+      operationId: getTransactions
+      produces:
+        - application/json
+      parameters:
+        - name: accountIban
+          in: query
+          type: string
+          required: false
+        - name: sortByAmount
+          in: query
+          <<: *SORT
+          type: string
+          required: false
+      responses:
+        200:
+          description: OK, PM acts returned
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/TransactionDto'
+        400:
+          description: Validation or functional errors
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      tags:
+        - transaction-bank
+      summary: Create transaction
+      description: Create transaction
+      operationId: createTransaction
+      produces:
+        - application/json
+      parameters:
+        - name: transaction
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionDto'
+      responses:
+        201:
+          description: Act created
+          schema:
+            $ref: '#/definitions/TransactionDto'
+        400:
+          description: Validation or functional errors
+          schema:
+            $ref: '#/definitions/Error'
+  '/transaction/status':
+    get:
+      tags:
+        - transaction-bank
+      summary: get all transaction bank
+      description: get all transaction bank, could be filtered
+      operationId: getTransactionsByStatus
+      produces:
+        - application/json
+      parameters:
+        - name: filter
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionFilterDto'
+
+      responses:
+        200:
+          description: OK, transactino bank returned
+          schema:
+            $ref: '#/definitions/TransactionDto'
+        400:
+          description: Validation or functional errors
+          schema:
+            $ref: '#/definitions/Error'
+
+
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+basePath: /csdm/web-api/1.1.0
+schemes:
+  - https

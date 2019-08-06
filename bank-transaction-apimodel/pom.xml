@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>bank-transaction</artifactId>
+        <groupId>com.nietol.tcs</groupId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>bank-transaction-apimodel</artifactId>
+
+    <properties>
+        <swagger.codegen.version>2.3.1</swagger.codegen.version>
+        <swagger-annotations-version>1.5.17</swagger-annotations-version>
+        <swagger.url>${project.basedir}/src/main/resources/swagger.yaml</swagger.url>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>${swagger-annotations-version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-codegen-maven-plugin</artifactId>
+                <version>${swagger.codegen.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${swagger.url}</inputSpec>
+                            <output>${project.build.directory}/generated-sources/swagger</output>
+                            <language>spring</language>
+                            <configOptions>
+                                <java8>true</java8>
+                                <interfaceOnly>true</interfaceOnly>
+                                <dateLibrary>java</dateLibrary>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

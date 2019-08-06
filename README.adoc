@@ -1,0 +1,63 @@
+= BANK TRANSACTION
+
+== How to install?
+1. Execute:
+----
+   mvn clean install
+----
+
+== Project Structure
+=== bank-transaction-apimodel
+
+It consists in 1 file:
+
+1*. *resources*: swagger.yaml.  Each endpoint and request is defined here.
+
+
+### bank-transaction-persistence
+
+1. *java/com.nietol.tcs.transaction.persitence*
+
+2. *generic*: audit (last_updated_date, creation_date)
+
+3. *model*: main entities
+
+4. *repository*: repositories to db access
+
+5. *WebReaderDBConfig*
+a. @EnableJpaRepositories
+b. @EnableJpaAuditing
+
+----
+<dependency>
+    <groupId>com.h2database</groupId>
+    <artifactId>h2</artifactId>
+    <scope>runtime</scope>
+</dependency>
+----
+
+### bank-transaction-service
+
+1. *java/com.nietol.tcs.transaction*
+
+a. *adapter*
+b. *exception*
+c. *service*
+d. *validation*
+e. *web*
+
+2. *resources*
+
+a. *application.yml*
+b. *data.sql* -> generate table in h2 db
+
+
+
+
+### UTILITIES
+
+#### SQL to generate DB
+
+----
+bank-transaction-service/src/main/resources/data.sql
+----
