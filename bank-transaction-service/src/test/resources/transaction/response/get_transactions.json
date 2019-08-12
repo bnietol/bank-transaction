@@ -1,0 +1,26 @@
+[
+  {
+    "amount": 20,
+    "accountIban": "IBAN1",
+    "reference": "reference20",
+    "fee": 0,
+    "description": "description"
+  },
+  {
+    "amount": 10,
+    "reference": "reference10",
+    "accountIban": "IBAN1",
+    "date": "2019-07-16T16:55:42.000Z",
+    "fee": 1,
+    "description": "description"
+  },
+  {
+    "amount": 0,
+    "accountIban": "accountIban",
+    "reference": "reference0",
+    "fee": 0,
+    "date": "3019-07-16T16:55:42.000Z",
+    "description": "description"
+  }
+]
+

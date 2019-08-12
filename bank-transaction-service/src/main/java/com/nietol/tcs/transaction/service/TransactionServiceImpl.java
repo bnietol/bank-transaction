@@ -118,8 +118,11 @@ public class TransactionServiceImpl implements TransactionService {
 
   private TransactionDto calculateFromATMOrClient(Long transactionTms, Long now,
       TransactionFilterDto filter, Transaction transaction) {
-    var result =
-        new TransactionDto().amount(subtract(transaction.getAmount(), transaction.getFee()));
+    //@formatter:off
+    var result = new TransactionDto()
+                .reference(transaction.getReference())
+                .amount(subtract(transaction.getAmount(), transaction.getFee()));
+    //@formatter:on
     if (transactionTms < now) {
       result.setStatus(TransactionDto.StatusEnum.SETTLED);
     } else if (transactionTms == now) {
@@ -139,8 +142,9 @@ public class TransactionServiceImpl implements TransactionService {
       Transaction transaction) {
     //@formatter:off
     var result = new TransactionDto()
-                .amount(transaction.getAmount())
-                .fee(transaction.getFee());
+            .reference(transaction.getReference())
+            .amount(transaction.getAmount())
+            .fee(transaction.getFee());
     //@formatter:on
     if (transactionTms < now) {
       result.setStatus(TransactionDto.StatusEnum.SETTLED);

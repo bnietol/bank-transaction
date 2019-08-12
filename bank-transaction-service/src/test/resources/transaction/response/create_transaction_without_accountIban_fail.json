@@ -1,0 +1,5 @@
+{
+  "code": "KOGEN01",
+  "message": "Validation error: '[transaction.accountIban]' params must not be null/empty",
+  "description": null
+}
